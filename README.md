@@ -27,5 +27,15 @@ Reproduce [YARN-1842](https://issues.apache.org/jira/browse/YARN-1842)
     --appconf file:///usr/local/hbaseconf/
     --zkhosts localhost
 ```
+##### Freeze the cluster should throw the exceptions 
+
+``` bash
+  hoya freeze hbase --manager localhost:8032 --filesystem hdfs://localhost:9000
+```
+
+##### Get the logs
+cd /usr/local/hadoop/logs/
+grep -rli "Exception" *
+
 
 
