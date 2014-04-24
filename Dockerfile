@@ -2,13 +2,14 @@
 #
 # docker build -t sequenceiq/hadoop-ubuntu .
 
-FROM ubuntu
+FROM debian
 MAINTAINER SequenceIQ
 
 USER root
 
 # install dev tools
-RUN apt-get install -y curl tar sudo openssh-server openssh-client rsync
+RUN apt-get update
+RUN apt-get install -y wget curl tar sudo openssh-server openssh-client rsync
 
 # passwordless ssh
 RUN rm -rf /etc/ssh/ssh_host_dsa_key
@@ -19,26 +20,20 @@ RUN rm -rf /root/.ssh/id_rsa
 RUN ssh-keygen -q -N "" -t rsa -f /root/.ssh/id_rsa
 RUN cp /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys
 
+# install Java 7
+RUN apt-get install -y openjdk-7-jdk
 
-#prepare for Java download
-RUN apt-get install -y python-software-properties
-RUN apt-get install -y software-properties-common
-
-#grab oracle Java (auto accept licence)
-RUN add-apt-repository -y ppa:webupd8team/java
-RUN apt-get update
-RUN echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
-RUN apt-get install -y oracle-java7-installer
-
-ENV JAVA_HOME /usr/lib/jvm/java-7-oracle
-ENV PATH $PATH:$JAVA_HOME/bin
+# set a bunch of environment variables
+ENV JAVA_HOME /usr/lib/jvm/java-7-openjdk-amd64
+ENV PATH $JAVA_HOME/bin:$PATH
 
 # hadoop
 RUN curl -s http://www.eu.apache.org/dist/hadoop/common/hadoop-2.3.0/hadoop-2.3.0.tar.gz | tar -xz -C /usr/local/
 RUN cd /usr/local && ln -s hadoop-2.3.0 hadoop
 
+
 ENV HADOOP_PREFIX /usr/local/hadoop
-RUN sed -i '/^export JAVA_HOME/ s:.*:export JAVA_HOME=/usr/lib/jvm/java-7-oracle\nexport HADOOP_PREFIX=/usr/local/hadoop\nexport HADOOP_HOME=/usr/local/hadoop\n:' $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh
+RUN sed -i '/^export JAVA_HOME/ s:.*:export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64\nexport HADOOP_PREFIX=/usr/local/hadoop\nexport HADOOP_HOME=/usr/local/hadoop\n:' $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh
 RUN sed -i '/^export HADOOP_CONF_DIR/ s:.*:export HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop/:' $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh
 RUN . $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh
 
