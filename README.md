@@ -1,4 +1,4 @@
-hoya-docker-ubuntu
+hoya-docker
 ==================
 
 Test container to reproduce https://issues.apache.org/jira/browse/YARN-1842
