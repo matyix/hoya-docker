@@ -1,6 +1,6 @@
 # Creates pseudo distributed hadoop 2.3 on Ubuntu
 #
-# docker build -t sequenceiq/hadoop-ubuntu .
+# docker build -t sequenceiq/hoya-ubuntu .
 
 FROM ubuntu
 MAINTAINER SequenceIQ
