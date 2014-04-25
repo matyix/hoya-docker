@@ -13,6 +13,7 @@ Choose the appropriate Linux OS, and switch/clone the branch. Once in the branch
 
 ##Build the image
 docker build --no-cache=false -t  sequenceiq/hoya-XXXXX .
+
 _XXXXX=ubuntu or debian_
 
 ##Run the image
