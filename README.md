@@ -7,7 +7,7 @@ Test container to reproduce https://issues.apache.org/jira/browse/YARN-1842
 Hadoop 2.3, Hoya 0.13, HBase 0.98, Zookeeper 3.3.6
 
 #####Linux OS
-Ubuntu, Debian
+Ubuntu, Debian, CentOS
 
 Choose the appropriate Linux OS, and switch/clone the branch. Once in the branch:
 
