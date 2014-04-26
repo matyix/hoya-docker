@@ -1,3 +1,4 @@
 TODO list
 
-#2 use Ansible to create all these OS specific setups
+1 base image for different OS
+2 use Ansible to create all these OS specific setups
